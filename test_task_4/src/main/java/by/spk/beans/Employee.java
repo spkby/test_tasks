@@ -13,18 +13,20 @@ public class Employee {
     private java.sql.Date birthday;
     private int positionId;
     private int departmentId;
+    private int salary;
 
-    public Employee(int id, String name, Date birthday, int positionId, int departmentId) {
+    public Employee(int id, String name, Date birthday, int positionId, int departmentId, int salary) {
         setId(id);
         setName(name);
         setBirthday(birthday);
         setPositionId(positionId);
         setDepartmentId(departmentId);
+        setSalary(salary);
     }
 
     public Employee(ResultSet rs) throws SQLException {
-        this(rs.getInt(1), rs.getString(2),
-                rs.getDate(3), rs.getInt(4), rs.getInt(5));
+        this(rs.getInt(1), rs.getString(2), rs.getDate(3),
+                rs.getInt(4), rs.getInt(5), rs.getInt(6));
     }
 
     public Employee() {
@@ -68,6 +70,14 @@ public class Employee {
 
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     @Override

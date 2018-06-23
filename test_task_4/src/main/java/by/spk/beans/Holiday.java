@@ -12,19 +12,45 @@ public class Holiday {
     private java.sql.Date dateFrom;
     private java.sql.Date dateTo;
     private int employeeId;
+    private Status status;
+
+    public enum Status {
+        PENDING(1),
+        ACCEPTED(2),
+        DENIED(3);
+
+        private final int value;
+
+        Status(int value) {
+            this.value = value;
+        }
+
+        public int get() {
+            return value;
+        }
+    }
 
     public Holiday() {
     }
 
-    public Holiday(int id, Date dateFrom, Date dateTo, int employeeId) {
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = Status.values()[status];
+    }
+
+    public Holiday(int id, Date dateFrom, Date dateTo, int employeeId, int status) {
         setId(id);
         setDateFrom(dateFrom);
         setDateTo(dateTo);
         setEmployeeId(employeeId);
+        setStatus(status);
     }
 
     public Holiday(ResultSet rs) throws SQLException {
-        this(rs.getInt(1), rs.getDate(2), rs.getDate(3), rs.getInt(4));
+        this(rs.getInt(1), rs.getDate(2), rs.getDate(3), rs.getInt(4), rs.getInt(5));
     }
 
     public int getId() {

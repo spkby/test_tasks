@@ -10,3 +10,5 @@
 /src/main/resources/company.properties
 /src/main/webapp/index.html
 /gradlew*
+/bin/
+/.settings/
