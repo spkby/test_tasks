@@ -1,65 +1,65 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Salary;
+import company.entity.Role;
 import org.hibernate.Session;
 
 import java.util.List;
 
-public class SalaryDAO extends SessionUtil implements IDAO<Salary> {
+public class RoleDAO extends SessionUtil implements IDAO<Role> {
 
     private Session session;
 
     @Override
-    public void add(Salary salary) {
+    public void add(Role role) {
         openTransactionSession();
 
         session = getSession();
-        session.save(salary);
+        session.save(role);
 
         closeTransactionSession();
     }
 
     @Override
-    public void remove(Salary salary) {
+    public void remove(Role role) {
         openTransactionSession();
 
         session = getSession();
-        session.remove(salary);
+        session.remove(role);
 
         closeTransactionSession();
     }
 
     @Override
-    public void update(Salary salary) {
+    public void update(Role role) {
         openTransactionSession();
 
         session = getSession();
-        session.update(salary);
+        session.update(role);
 
         closeTransactionSession();
     }
 
     @Override
-    public Salary getById(int id) {
+    public Role getById(int id) {
 
         openTransactionSession();
 
         session = getSession();
-        Salary salary = session.get(Salary.class, id);
+        Role role = session.get(Role.class, id);
 
         closeTransactionSession();
 
-        return salary;
+        return role;
     }
 
     @Override
-    public List<Salary> getList() {
+    public List<Role> getList() {
         openTransactionSession();
 
         session = getSession();
 
-        List<Salary> list = session.createNativeQuery("SELECT * from salary", Salary.class).list();
+        List<Role> list = session.createNativeQuery("SELECT * from Role", Role.class).list();
 
         closeTransactionSession();
 

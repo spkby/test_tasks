@@ -10,13 +10,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "login", length = 20, nullable = false)
+    @Column(name = "login", length = 20, nullable = false, unique = true)
     private String login;
 
     @Column(name = "pass", length = 20, nullable = false)
     private String pass;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Employee employee;
 
     public Account() {
@@ -58,5 +58,15 @@ public class Account {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", pass='" + pass + '\'' +
+                ", employee=" + employee +
+                '}';
     }
 }

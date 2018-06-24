@@ -10,7 +10,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", length = 10, nullable = false)
+    @Column(name = "name", length = 10, nullable = false, unique = true)
     private String name;
 
     public Department(String name) {
@@ -34,5 +34,13 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

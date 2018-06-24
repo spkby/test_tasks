@@ -1,65 +1,65 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Salary;
+import company.entity.Department;
 import org.hibernate.Session;
 
 import java.util.List;
 
-public class SalaryDAO extends SessionUtil implements IDAO<Salary> {
+public class DepartmentDAO extends SessionUtil implements IDAO<Department> {
 
     private Session session;
 
     @Override
-    public void add(Salary salary) {
+    public void add(Department department) {
         openTransactionSession();
 
         session = getSession();
-        session.save(salary);
+        session.save(department);
 
         closeTransactionSession();
     }
 
     @Override
-    public void remove(Salary salary) {
+    public void remove(Department department) {
         openTransactionSession();
 
         session = getSession();
-        session.remove(salary);
+        session.remove(department);
 
         closeTransactionSession();
     }
 
     @Override
-    public void update(Salary salary) {
+    public void update(Department department) {
         openTransactionSession();
 
         session = getSession();
-        session.update(salary);
+        session.update(department);
 
         closeTransactionSession();
     }
 
     @Override
-    public Salary getById(int id) {
+    public Department getById(int id) {
 
         openTransactionSession();
 
         session = getSession();
-        Salary salary = session.get(Salary.class, id);
+        Department department = session.get(Department.class, id);
 
         closeTransactionSession();
 
-        return salary;
+        return department;
     }
 
     @Override
-    public List<Salary> getList() {
+    public List<Department> getList() {
         openTransactionSession();
 
         session = getSession();
 
-        List<Salary> list = session.createNativeQuery("SELECT * from salary", Salary.class).list();
+        List<Department> list = session.createNativeQuery("SELECT * FROM Department", Department.class).list();
 
         closeTransactionSession();
 

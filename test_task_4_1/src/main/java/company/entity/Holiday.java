@@ -2,7 +2,6 @@ package company.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "holiday")
@@ -18,13 +17,10 @@ public class Holiday {
     @Column(name = "date_from", nullable = false)
     private Date dateFrom;
 
-    /*@ManyToMany(mappedBy = "holidays")
-    private Set<Employee> employees;*/
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Employee employee;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Status status;
 
     public Holiday() {
@@ -75,5 +71,16 @@ public class Holiday {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Holiday{" +
+                "id=" + id +
+                ", dateTo=" + dateTo +
+                ", dateFrom=" + dateFrom +
+                ", employee=" + employee +
+                ", status=" + status +
+                '}';
     }
 }

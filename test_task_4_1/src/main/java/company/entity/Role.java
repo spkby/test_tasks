@@ -12,7 +12,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", length = 10, nullable = false)
+    @Column(name = "name", length = 10, nullable = false, unique = true)
     private String name;
 
     public Role() {
@@ -40,7 +40,9 @@ public class Role {
 
     @Override
     public String toString() {
-        return id +
-                Constants.DELIMITER + name ;
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

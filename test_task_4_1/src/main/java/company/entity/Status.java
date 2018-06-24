@@ -10,7 +10,7 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", length = 10, nullable = false)
+    @Column(name = "name", length = 10, nullable = false, unique = true)
     private String name;
 
     public Status() {
@@ -35,5 +35,13 @@ public class Status {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -1,83 +1,83 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
+import company.entity.Department;
 import company.entity.Employee;
-import company.entity.Holiday;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
+public class EmployeeDAO extends SessionUtil implements IDAO<Employee> {
 
     private Session session;
 
     @Override
-    public void add(Holiday holiday) {
+    public void add(Employee employee) {
         openTransactionSession();
 
         session = getSession();
-        session.save(holiday);
+        session.save(employee);
 
         closeTransactionSession();
     }
 
     @Override
-    public void remove(Holiday holiday) {
+    public void remove(Employee employee) {
         openTransactionSession();
 
         session = getSession();
-        session.remove(holiday);
+        session.remove(employee);
 
         closeTransactionSession();
     }
 
     @Override
-    public void update(Holiday holiday) {
+    public void update(Employee employee) {
         openTransactionSession();
 
         session = getSession();
-        session.update(holiday);
+        session.update(employee);
 
         closeTransactionSession();
     }
 
     @Override
-    public Holiday getById(int id) {
+    public Employee getById(int id) {
 
         openTransactionSession();
 
         session = getSession();
-        Holiday holiday = session.get(Holiday.class, id);
+        Employee employee = session.get(Employee.class, id);
 
         closeTransactionSession();
 
-        return holiday;
+        return employee;
     }
 
     @Override
-    public List<Holiday> getList() {
+    public List<Employee> getList() {
         openTransactionSession();
 
         session = getSession();
 
-        List<Holiday> list = session.createNativeQuery("SELECT * from Holiday", Holiday.class).list();
+        List<Employee> list = session.createNativeQuery("SELECT * from Employee", Employee.class).list();
 
         closeTransactionSession();
 
         return list;
     }
 
-    public List<Holiday> getListByEmployee(Employee employee) {
+    public List<Employee> getListByDepartment(Department department) {
         openTransactionSession();
 
-        String sql = "SELECT * FROM holiday WHERE employee_id = ?1";
+        String sql = "SELECT * FROM employee WHERE department_id = ?1";
         session = getSession();
 
-        Query query = session.createNativeQuery(sql,Holiday.class);
-        query.setParameter(1, employee.getId());
+        Query query = session.createNativeQuery(sql,Employee.class);
+        query.setParameter(1, department.getId());
 
-        List<Holiday> list = query.getResultList();
+        List<Employee> list = query.getResultList();
 
         closeTransactionSession();
 

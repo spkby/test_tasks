@@ -19,7 +19,7 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         session = getSession();
         session.save(account);
 
-        closeTransactionSesstion();
+        closeTransactionSession();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         session = getSession();
         session.remove(account);
 
-        closeTransactionSesstion();
+        closeTransactionSession();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         session = getSession();
         session.update(account);
 
-        closeTransactionSesstion();
+        closeTransactionSession();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         session = getSession();
         Account account = session.get(Account.class, id);
 
-        closeTransactionSesstion();
+        closeTransactionSession();
 
         return account;
     }
@@ -61,9 +61,9 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
 
         session = getSession();
 
-        List<Account> list = session.createQuery("SELECT * FROM account", Account.class).list();
+        List<Account> list = session.createNativeQuery("SELECT * from account", Account.class).list();
 
-        closeTransactionSesstion();
+        closeTransactionSession();
 
         return list;
     }

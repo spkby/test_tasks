@@ -1,6 +1,9 @@
 package company;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Utils {
 
@@ -16,6 +19,16 @@ public class Utils {
             System.err.println(e);
         }
         return value;
+    }
+
+    public static Date toDate(String str){
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        java.util.Date date = null;
+        try {
+            date = format.parse(str);
+        } catch (ParseException e) {
+            System.err.println(e);        }
+        return new java.sql.Date(date.getTime());
     }
 
 }
