@@ -24,7 +24,7 @@ public class DepartmentController extends AbstractController {
 
         if (Security.getRoleId(login) == Security.RoleId.MANAGER) {
             model.addAttribute("departments", new DepartmentDAO().getList());
-            return "departments";
+            return "department/list";
         } else {
             return "redirect:/login";
         }
@@ -54,7 +54,7 @@ public class DepartmentController extends AbstractController {
 
         if (Security.getRoleId(login) == Security.RoleId.MANAGER || Security.getRoleId(login) == Security.RoleId.LEAD) {
             model.addAttribute("employees", new EmployeeDAO().getListByDepartment(id));
-            return "employees";
+            return "employee/list";
         } else {
             return "redirect:/login";
         }

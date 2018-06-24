@@ -23,7 +23,7 @@ public class EmployeeController extends AbstractController {
 
         if (Security.getRoleId(login) == Security.RoleId.MANAGER) {
             model.addAttribute("employees", new EmployeeDAO().getList());
-            return "employees";
+            return "employee/list";
         } else if (Security.getRoleId(login) == Security.RoleId.LEAD) {
             return "redirect:/department/view/";
         } else {
@@ -53,6 +53,9 @@ public class EmployeeController extends AbstractController {
         }
 
         model.addAttribute("employee", new EmployeeDAO().getById(id));
-        return "employee";
+        return "employee/view";
     }
+
+    // TODO: add, remove, update
+
 }
