@@ -2,7 +2,7 @@ package company.Hibernate;
 
 import company.DAO.*;
 import company.Utils;
-import company.entity.*;
+import company.model.*;
 
 public class Init {
 
@@ -12,12 +12,16 @@ public class Init {
 
         // fillData();
 
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = accountDAO.getAccountByLogin("employee1");
+        System.out.println(account);
+
         DepartmentDAO departmentDAO = new DepartmentDAO();
         departmentDAO.getList().stream().forEach(System.out::println);
         System.out.println();
 
         EmployeeDAO employeeDAO = new EmployeeDAO();
-        employeeDAO.getListByDepartment(departmentDAO.getById(3)).stream()
+        employeeDAO.getListByDepartment(departmentDAO.getById(3).getId()).stream()
                 .forEach(System.out::println);
         System.out.println();
 

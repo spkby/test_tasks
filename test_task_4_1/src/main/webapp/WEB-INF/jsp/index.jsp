@@ -2,48 +2,16 @@
 <%@ include file="header.jsp" %>
 
 <div class="jumbotron">
-	<div class="container">
-		<h1>${msg}</h1>
-		<p>
-			<c:if test="${not empty msg}">
-				Hello ${msg}
-			</c:if>
-
-			<c:if test="${empty msg}">
-				Welcome Welcome!
-			</c:if>
-		<p>
-			<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-		</p>
-	</div>
+    <div class="container">
+        <c:choose>
+            <c:when test="${account!=null}">
+                <h2>Hello ${account.employee.name}</h2>
+            </c:when>
+            <c:otherwise>
+                <h2>Hello Guest</h2>
+                <a href="/login">Login</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
-
-<div class="container">
-
-	<div class="row">
-		<div class="col-md-4">
-			<h2>Heading</h2>
-			<p>ABC</p>
-			<p>
-				<a class="btn btn-default" href="#" role="button">View details</a>
-			</p>
-		</div>
-		<div class="col-md-4">
-			<h2>Heading</h2>
-			<p>ABC</p>
-			<p>
-				<a class="btn btn-default" href="#" role="button">View details</a>
-			</p>
-		</div>
-		<div class="col-md-4">
-			<h2>Heading</h2>
-			<p>ABC</p>
-			<p>
-				<a class="btn btn-default" href="#" role="button">View details</a>
-			</p>
-		</div>
-	</div>
-
-
-	<hr>
 <%@ include file="footer.jsp" %>

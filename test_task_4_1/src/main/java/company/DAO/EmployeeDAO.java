@@ -1,8 +1,8 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Department;
-import company.entity.Employee;
+import company.model.Department;
+import company.model.Employee;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -68,14 +68,14 @@ public class EmployeeDAO extends SessionUtil implements IDAO<Employee> {
         return list;
     }
 
-    public List<Employee> getListByDepartment(Department department) {
+    public List<Employee> getListByDepartment(int id) {
         openTransactionSession();
 
         String sql = "SELECT * FROM employee WHERE department_id = ?1";
         session = getSession();
 
         Query query = session.createNativeQuery(sql,Employee.class);
-        query.setParameter(1, department.getId());
+        query.setParameter(1, id);
 
         List<Employee> list = query.getResultList();
 

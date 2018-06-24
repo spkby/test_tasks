@@ -1,12 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title><c:out value="${title}"/></title>
+    <title>MVC</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -31,13 +30,18 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Project Name</a>
-
-                <c:if test="${not empty msg}">
-                    Hello ${msg}
+                <a class="navbar-brand" href="/">Home</a>
+                <c:if test="${account!=null}">
+                    <c:if test="${account.employee.role.id == 1}">
+                        <a class="navbar-brand" href="/department/view">Departments</a>
+                        <a class="navbar-brand" href="/employee/view">Employees</a>
+                    </c:if>
+                    <c:if test="${account.employee.role.id == 2}">
+                        <a class="navbar-brand" href="/department/view/">Department</a>
+                    </c:if>
+                    <a class="navbar-brand" href="/employee/view/">Employee</a>
+                    <a class="navbar-brand" href="/logout">Logout</a>
                 </c:if>
-
-
             </div>
         </div>
     </nav>

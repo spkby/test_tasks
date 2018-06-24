@@ -21,13 +21,13 @@
 
         <property name="show_sql">false</property>
 
-        <mapping class="company.entity.Account"/>
-        <mapping class="company.entity.Department"/>
-        <mapping class="company.entity.Employee"/>
-        <mapping class="company.entity.Holiday"/>
-        <mapping class="company.entity.Role"/>
-        <mapping class="company.entity.Salary"/>
-        <mapping class="company.entity.Status"/>
+        <mapping class="company.model.Account"/>
+        <mapping class="company.model.Department"/>
+        <mapping class="company.model.Employee"/>
+        <mapping class="company.model.Holiday"/>
+        <mapping class="company.model.Role"/>
+        <mapping class="company.model.Salary"/>
+        <mapping class="company.model.Status"/>
 
     </session-factory>
 

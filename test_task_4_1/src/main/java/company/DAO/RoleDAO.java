@@ -1,7 +1,7 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Role;
+import company.model.Role;
 import org.hibernate.Session;
 
 import java.util.List;

@@ -1,9 +1,10 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Account;
-import company.entity.Employee;
+import company.model.Account;
+import company.model.Employee;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,17 +69,37 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         return list;
     }
 
-    public Account getAccountByEmployee(Employee employee){
+    public Account getAccountByEmployee(Employee employee) {
 
-        return getList().stream()
-                .filter(s -> s.getEmployee().getId() == employee.getId())
-                .limit(1)
-                .collect(Collectors.toList())
-                .get(0);
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("SELECT * from account WHERE employee_id = ?1", Account.class);
+        query.setParameter(1, employee.getId());
+        List<Account> list = query.getResultList();
+
+        closeTransactionSession();
+
+        return list.size() == 0 ? null : list.get(0);
     }
 
-    public Employee getEmployeeByAccount(Account account){
+    public Employee getEmployeeByAccount(Account account) {
 
         return getById(account.getId()).getEmployee();
+    }
+
+    public Account getAccountByLogin(String login) {
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("SELECT * from account WHERE login = ?1", Account.class);
+        query.setParameter(1, login);
+        List<Account> list = query.getResultList();
+
+        closeTransactionSession();
+
+        return list.size() == 0 ? null : list.get(0);
     }
 }

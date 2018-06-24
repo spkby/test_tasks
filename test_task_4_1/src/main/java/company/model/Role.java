@@ -1,10 +1,10 @@
-package company.entity;
+package company.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "department")
-public class Department {
+@Table(name = "role")
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +13,11 @@ public class Department {
     @Column(name = "name", length = 10, nullable = false, unique = true)
     private String name;
 
-    public Department(String name) {
-        this.name = name;
+    public Role() {
     }
 
-    public Department() {
+    public Role(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -38,7 +38,7 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
+        return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

@@ -1,10 +1,10 @@
-package company.entity;
+package company.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "status")
-public class Status {
+@Table(name = "department")
+public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,12 +13,11 @@ public class Status {
     @Column(name = "name", length = 10, nullable = false, unique = true)
     private String name;
 
-    public Status() {
+    public Department(String name) {
+        this.name = name;
     }
 
-    public Status(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Department() {
     }
 
     public int getId() {
@@ -39,7 +38,7 @@ public class Status {
 
     @Override
     public String toString() {
-        return "Status{" +
+        return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

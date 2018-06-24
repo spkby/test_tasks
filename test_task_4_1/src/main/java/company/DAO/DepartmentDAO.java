@@ -1,7 +1,7 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Department;
+import company.model.Department;
 import org.hibernate.Session;
 
 import java.util.List;

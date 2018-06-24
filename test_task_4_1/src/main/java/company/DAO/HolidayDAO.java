@@ -1,8 +1,8 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.entity.Employee;
-import company.entity.Holiday;
+import company.model.Employee;
+import company.model.Holiday;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
