@@ -4,14 +4,20 @@ import company.DAO.*;
 import company.Utils;
 import company.model.*;
 
-public class Init {
+public class InitDBUtil {
 
     public static void main(String[] args) {
 
-        // fillConstantData();
+        //fillConstantData();
 
-        // fillData();
+        //fillSampleData();
 
+        //test();
+
+        HibernateUtil.shutdown();
+    }
+
+    private static void test() {
         AccountDAO accountDAO = new AccountDAO();
         Account account = accountDAO.getAccountByLogin("employee1");
         System.out.println(account);
@@ -28,10 +34,6 @@ public class Init {
         HolidayDAO holidayDAO = new HolidayDAO();
         holidayDAO.getListByEmployee(employeeDAO.getById(2)).stream().forEach(System.out::println);
         System.out.println();
-
-
-        HibernateUtil.shutdown();
-
     }
 
     private static void fillConstantData() {
@@ -76,9 +78,28 @@ public class Init {
         department = new Department();
         department.setName("IT");
         dao.add(department);
+
+        // 1
+        Salary salary = new Salary();
+        salary.setQuantity(3300);
+        new SalaryDAO().add(salary);
+
+        Employee employee = new Employee();
+        employee.setBirthday(Utils.toDate("01-01-1991"));
+        employee.setName("Employee 1");
+        employee.setRole(new RoleDAO().getById(1));
+        employee.setDepartment(new DepartmentDAO().getById(1));
+        employee.setSalary(salary);
+        new EmployeeDAO().add(employee);
+
+        Account account = new Account();
+        account.setEmployee(employee);
+        account.setLogin("employee1");
+        account.setPass("123");
+        new AccountDAO().add(account);
     }
 
-    private static void fillData() {
+    private static void fillSampleData() {
 
         RoleDAO roleDAO = new RoleDAO();
         DepartmentDAO departmentDAO = new DepartmentDAO();
@@ -94,26 +115,8 @@ public class Init {
         Holiday holiday;
 
         // 1
-        salary = new Salary();
-        salary.setQuantity(3300);
-        salaryDAO.add(salary);
-
-        employee = new Employee();
-        employee.setBirthday(Utils.toDate("01-01-1991"));
-        employee.setName("Employee 1");
-        employee.setRole(roleDAO.getById(1));
-        employee.setDepartment(departmentDAO.getById(1));
-        employee.setSalary(salary);
-        employeeDAO.add(employee);
-
-        account = new Account();
-        account.setEmployee(employee);
-        account.setLogin("employee1");
-        account.setPass("123");
-        accountDAO.add(account);
-
         holiday = new Holiday();
-        holiday.setEmployee(employee);
+        holiday.setEmployee(employeeDAO.getById(1));
         holiday.setDateFrom(Utils.toDate("01-08-2018"));
         holiday.setDateTo(Utils.toDate("11-08-2018"));
         holiday.setStatus(statusDAO.getById(1));
