@@ -23,9 +23,9 @@ public class Account {
     }
 
     public Account(String login, String pass, Employee employee) {
-        this.login = login;
-        this.pass = pass;
-        this.employee = employee;
+        setLogin(login);
+        setPass(pass);
+        setEmployee(employee);
     }
 
     public int getId() {
@@ -41,6 +41,12 @@ public class Account {
     }
 
     public void setLogin(String login) {
+        if (login.isEmpty()) {
+            throw new IllegalArgumentException("Invalid account login: empty");
+        }
+        if (login.length() > 20) {
+            throw new IllegalArgumentException("Invalid account login: length more 20");
+        }
         this.login = login;
     }
 
@@ -49,6 +55,12 @@ public class Account {
     }
 
     public void setPass(String pass) {
+        if (pass.isEmpty()) {
+            throw new IllegalArgumentException("Invalid account pass: empty");
+        }
+        if (pass.length() > 20) {
+            throw new IllegalArgumentException("Invalid account pass: length more 20");
+        }
         this.pass = pass;
     }
 
@@ -57,6 +69,9 @@ public class Account {
     }
 
     public void setEmployee(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("Invalid account employee: null");
+        }
         this.employee = employee;
     }
 

@@ -14,6 +14,4 @@ public class MainController extends AbstractController{
 
         return "index";
     }
-
-
 }

@@ -30,58 +30,76 @@ public class Employee {
     }
 
     public Employee(String name, Date birthday, Role role, Department department, Salary salary) {
-        this.name = name;
-        this.birthday = birthday;
-        this.role = role;
-        this.department = department;
-        this.salary = salary;
+        setName(name);
+        setBirthday(birthday);
+        setRole(role);
+        setDepartment(department);
+        setSalary(salary);
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public Role getRole() {
         return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     public Salary getSalary() {
         return salary;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Invalid employee name: empty");
+        }
+        if (name.length() > 50) {
+            throw new IllegalArgumentException("Invalid employee name: length more 50");
+        }
+        this.name = name;
+    }
+
+    public void setBirthday(Date birthday) {
+        if (birthday == null) {
+            throw new IllegalArgumentException("Invalid employee birthday: null");
+        }
+        this.birthday = birthday;
+    }
+
+    public void setRole(Role role) {
+        if (role == null) {
+            throw new IllegalArgumentException("Invalid employee role: null");
+        }
+        this.role = role;
+    }
+
+    public void setDepartment(Department department) {
+        if (department == null) {
+            throw new IllegalArgumentException("Invalid employee department: null");
+        }
+        this.department = department;
+    }
+
     public void setSalary(Salary salary) {
+        if (salary == null) {
+            throw new IllegalArgumentException("Invalid employee salary: null");
+        }
         this.salary = salary;
     }
 

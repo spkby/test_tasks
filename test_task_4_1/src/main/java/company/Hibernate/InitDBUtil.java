@@ -1,16 +1,17 @@
 package company.Hibernate;
 
 import company.DAO.*;
-import company.Utils;
 import company.model.*;
+
+import java.sql.Date;
 
 public class InitDBUtil {
 
     public static void main(String[] args) {
 
-        //fillConstantData();
+        fillConstantData();
 
-        //fillSampleData();
+        fillSampleData();
 
         //test();
 
@@ -81,12 +82,12 @@ public class InitDBUtil {
 
         // 1
         Salary salary = new Salary();
-        salary.setQuantity(3300);
+        salary.setQuantity(1);
         new SalaryDAO().add(salary);
 
         Employee employee = new Employee();
-        employee.setBirthday(Utils.toDate("01-01-1991"));
-        employee.setName("Employee 1");
+        employee.setBirthday(Date.valueOf("1991-01-01"));
+        employee.setName("admin");
         employee.setRole(new RoleDAO().getById(1));
         employee.setDepartment(new DepartmentDAO().getById(1));
         employee.setSalary(salary);
@@ -94,8 +95,8 @@ public class InitDBUtil {
 
         Account account = new Account();
         account.setEmployee(employee);
-        account.setLogin("employee1");
-        account.setPass("123");
+        account.setLogin("1");
+        account.setPass("1");
         new AccountDAO().add(account);
     }
 
@@ -115,10 +116,28 @@ public class InitDBUtil {
         Holiday holiday;
 
         // 1
+        salary = new Salary();
+        salary.setQuantity(3100);
+        salaryDAO.add(salary);
+
+        employee = new Employee();
+        employee.setBirthday(Date.valueOf("1991-01-02"));
+        employee.setName("Employee 1");
+        employee.setRole(roleDAO.getById(1));
+        employee.setDepartment(departmentDAO.getById(1));
+        employee.setSalary(salary);
+        employeeDAO.add(employee);
+
+        account = new Account();
+        account.setEmployee(employee);
+        account.setLogin("employee1");
+        account.setPass("123");
+        accountDAO.add(account);
+
         holiday = new Holiday();
-        holiday.setEmployee(employeeDAO.getById(1));
-        holiday.setDateFrom(Utils.toDate("01-08-2018"));
-        holiday.setDateTo(Utils.toDate("11-08-2018"));
+        holiday.setEmployee(employee);
+        holiday.setDateFrom(Date.valueOf("2018-08-01"));
+        holiday.setDateTo(Date.valueOf("2018-08-11"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -128,7 +147,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("02-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-02"));
         employee.setName("Employee 2");
         employee.setRole(roleDAO.getById(1));
         employee.setDepartment(departmentDAO.getById(1));
@@ -143,8 +162,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("02-08-2018"));
-        holiday.setDateTo(Utils.toDate("12-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-02"));
+        holiday.setDateTo(Date.valueOf("2018-08-12"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -154,7 +173,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("03-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-03"));
         employee.setName("Employee 3");
         employee.setRole(roleDAO.getById(2));
         employee.setDepartment(departmentDAO.getById(2));
@@ -169,8 +188,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("03-08-2018"));
-        holiday.setDateTo(Utils.toDate("13-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-03"));
+        holiday.setDateTo(Date.valueOf("2018-08-13"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -180,7 +199,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("04-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-04"));
         employee.setName("Employee 4");
         employee.setRole(roleDAO.getById(3));
         employee.setDepartment(departmentDAO.getById(2));
@@ -195,8 +214,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("04-08-2018"));
-        holiday.setDateTo(Utils.toDate("14-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-04"));
+        holiday.setDateTo(Date.valueOf("2018-08-14"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -206,7 +225,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("05-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-05"));
         employee.setName("Employee 5");
         employee.setRole(roleDAO.getById(3));
         employee.setDepartment(departmentDAO.getById(2));
@@ -221,8 +240,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("05-08-2018"));
-        holiday.setDateTo(Utils.toDate("15-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-05"));
+        holiday.setDateTo(Date.valueOf("2018-08-15"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -232,7 +251,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("06-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-06"));
         employee.setName("Employee 6");
         employee.setRole(roleDAO.getById(2));
         employee.setDepartment(departmentDAO.getById(3));
@@ -247,8 +266,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("06-08-2018"));
-        holiday.setDateTo(Utils.toDate("16-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-06"));
+        holiday.setDateTo(Date.valueOf("2018-08-16"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -258,7 +277,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("07-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-07"));
         employee.setName("Employee 7");
         employee.setRole(roleDAO.getById(3));
         employee.setDepartment(departmentDAO.getById(3));
@@ -273,8 +292,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("07-08-2018"));
-        holiday.setDateTo(Utils.toDate("17-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-07"));
+        holiday.setDateTo(Date.valueOf("2018-08-17"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
 
@@ -284,7 +303,7 @@ public class InitDBUtil {
         salaryDAO.add(salary);
 
         employee = new Employee();
-        employee.setBirthday(Utils.toDate("08-01-1991"));
+        employee.setBirthday(Date.valueOf("1991-01-08"));
         employee.setName("Employee 8");
         employee.setRole(roleDAO.getById(3));
         employee.setDepartment(departmentDAO.getById(3));
@@ -299,8 +318,8 @@ public class InitDBUtil {
 
         holiday = new Holiday();
         holiday.setEmployee(employee);
-        holiday.setDateFrom(Utils.toDate("08-08-2018"));
-        holiday.setDateTo(Utils.toDate("18-08-2018"));
+        holiday.setDateFrom(Date.valueOf("2018-08-08"));
+        holiday.setDateTo(Date.valueOf("2018-08-18"));
         holiday.setStatus(statusDAO.getById(1));
         holidayDAO.add(holiday);
     }

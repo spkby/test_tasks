@@ -6,7 +6,7 @@ public interface IDAO<T> {
 
     void add(T t);
 
-    void remove(T t);
+    void remove(int id);
 
     void update(T t);
 

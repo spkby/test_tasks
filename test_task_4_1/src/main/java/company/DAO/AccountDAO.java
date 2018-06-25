@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AccountDAO extends SessionUtil implements IDAO<Account> {
 
@@ -24,20 +23,17 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
     }
 
     @Override
-    public void remove(Account account) {
-        openTransactionSession();
-
-        session = getSession();
-        session.remove(account);
-
-        closeTransactionSession();
-    }
-
-    @Override
     public void update(Account account) {
         openTransactionSession();
 
         session = getSession();
+
+        /*Query query = session.createNativeQuery("UPDATE account SET login = ?1, " +
+                "pass = ?2 WHERE id = ?3");
+        query.setParameter(1, account.getLogin());
+        query.setParameter(2, account.getPass());
+        query.setParameter(3, account.getId());
+        query.executeUpdate();*/
         session.update(account);
 
         closeTransactionSession();
@@ -85,7 +81,6 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
     }
 
     public Employee getEmployeeByAccount(Account account) {
-
         return getById(account.getId()).getEmployee();
     }
 
@@ -101,5 +96,30 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         closeTransactionSession();
 
         return list.size() == 0 ? null : list.get(0);
+    }
+
+    public void removeByEmployeeId(int employeeId) {
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("DELETE from account WHERE employee_id = ?1");
+        query.setParameter(1, employeeId);
+        query.executeUpdate();
+
+        closeTransactionSession();
+    }
+
+    @Override
+    public void remove(int id) {
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("DELETE from account WHERE id = ?1");
+        query.setParameter(1, id);
+        query.executeUpdate();
+
+        closeTransactionSession();
     }
 }

@@ -22,12 +22,14 @@ public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
         closeTransactionSession();
     }
 
-    @Override
-    public void remove(Holiday holiday) {
+    public void remove(int id) {
         openTransactionSession();
 
         session = getSession();
-        session.remove(holiday);
+
+        Query query = session.createNativeQuery("DELETE from holiday WHERE id = ?1");
+        query.setParameter(1, id);
+        query.executeUpdate();
 
         closeTransactionSession();
     }
@@ -74,7 +76,7 @@ public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
         String sql = "SELECT * FROM holiday WHERE employee_id = ?1";
         session = getSession();
 
-        Query query = session.createNativeQuery(sql,Holiday.class);
+        Query query = session.createNativeQuery(sql, Holiday.class);
         query.setParameter(1, employee.getId());
 
         List<Holiday> list = query.getResultList();
@@ -82,5 +84,17 @@ public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
         closeTransactionSession();
 
         return list;
+    }
+
+    public void removeByEmployeeId(int employeeId) {
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("DELETE from holiday WHERE employee_id = ?1");
+        query.setParameter(1, employeeId);
+        query.executeUpdate();
+
+        closeTransactionSession();
     }
 }

@@ -14,7 +14,7 @@ public class Department {
     private String name;
 
     public Department(String name) {
-        this.name = name;
+        setName(name);
     }
 
     public Department() {
@@ -33,6 +33,12 @@ public class Department {
     }
 
     public void setName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Invalid department name: empty");
+        }
+        if (name.length() > 10) {
+            throw new IllegalArgumentException("Invalid department name: length more 10");
+        }
         this.name = name;
     }
 

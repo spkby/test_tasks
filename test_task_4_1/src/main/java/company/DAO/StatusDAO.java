@@ -21,23 +21,11 @@ public class StatusDAO extends SessionUtil implements IDAO<Status> {
     }
 
     @Override
-    public void remove(Status status) {
-        openTransactionSession();
-
-        session = getSession();
-        session.remove(status);
-
-        closeTransactionSession();
+    public void remove(int id) {
     }
 
     @Override
     public void update(Status status) {
-        openTransactionSession();
-
-        session = getSession();
-        session.update(status);
-
-        closeTransactionSession();
     }
 
     @Override

@@ -3,6 +3,7 @@ package company.DAO;
 import company.Hibernate.SessionUtil;
 import company.model.Department;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -21,23 +22,12 @@ public class DepartmentDAO extends SessionUtil implements IDAO<Department> {
     }
 
     @Override
-    public void remove(Department department) {
-        openTransactionSession();
+    public void remove(int id) {
 
-        session = getSession();
-        session.remove(department);
-
-        closeTransactionSession();
     }
 
     @Override
     public void update(Department department) {
-        openTransactionSession();
-
-        session = getSession();
-        session.update(department);
-
-        closeTransactionSession();
     }
 
     @Override
@@ -65,4 +55,21 @@ public class DepartmentDAO extends SessionUtil implements IDAO<Department> {
 
         return list;
     }
+
+    public Department getByName(String name) {
+
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("SELECT * from Department WHERE name = ?1", Department.class);
+        query.setParameter(1, name);
+        List<Department> list = query.getResultList();
+
+        closeTransactionSession();
+
+        return list.size() == 0 ? null : list.get(0);
+    }
+
+
 }

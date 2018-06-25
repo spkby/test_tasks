@@ -17,7 +17,7 @@
         </div>
         <input type="submit" class="btn btn-primary" value="Login">
     </form>
-    <c:if test="${error}">
+    <c:if test="${param.error}">
         <div class="alert alert-danger" role="alert">
             Invalid login or password
         </div>

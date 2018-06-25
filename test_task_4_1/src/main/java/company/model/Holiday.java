@@ -27,10 +27,10 @@ public class Holiday {
     }
 
     public Holiday(Date dateTo, Date dateFrom, Employee employee, Status status) {
-        this.dateTo = dateTo;
-        this.dateFrom = dateFrom;
-        this.employee = employee;
-        this.status = status;
+        setDateTo(dateTo);
+        setDateFrom(dateFrom);
+        setEmployee(employee);
+        setStatus(status);
     }
 
     public int getId() {
@@ -62,6 +62,9 @@ public class Holiday {
     }
 
     public void setEmployee(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("Invalid holiday employee: null");
+        }
         this.employee = employee;
     }
 
@@ -70,6 +73,9 @@ public class Holiday {
     }
 
     public void setStatus(Status status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Invalid holiday status: null");
+        }
         this.status = status;
     }
 

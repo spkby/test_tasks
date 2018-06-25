@@ -1,16 +1,97 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: spk
-  Date: 25.06.2018
-  Time: 0:20
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="../header.jsp" %>
 
-</body>
-</html>
+
+<div class="jumbotron">
+    <form action="/employee/add" method="post" class="needs-validation" novalidate>
+        <div class="form-group">
+            <input type="text" class="form-control" name="login" placeholder="Login" required>
+            <div class="invalid-feedback">
+                Please enter login.
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="pass" placeholder="Password" required>
+            <div class="invalid-feedback">
+                Please enter password.
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <input type="text" class="form-control" name="name" placeholder="Name" required>
+            <div class="invalid-feedback">
+                Please enter name.
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="birthday" placeholder="Birthday YYYY-MM-DD" required>
+            <div class="invalid-feedback">
+                Please enter birthday.
+            </div>
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="department">
+                <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
+                    <option>${department.name}</option>
+                </c:forEach>
+            </select>
+            <div class="invalid-feedback">
+                Please enter department.
+            </div>
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="role">
+                <c:forEach items="${pageContext.request.getAttribute('roles')}" var="role">
+                    <option>${role.name}</option>
+                </c:forEach>
+            </select>
+            <div class="invalid-feedback">
+                Please enter role.
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <input type="text" class="form-control" name="salary" placeholder="Salary" required
+                   onkeypress="return isNumber(event)">
+            <div class="invalid-feedback">
+                Please enter salary.
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add">
+    </form>
+    <c:if test="${param.error!=null}">
+        <div class="alert alert-danger" role="alert">
+            Error: ${param.error}
+        </div>
+    </c:if>
+</div>
+<script>
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+<%@ include file="../footer.jsp" %>

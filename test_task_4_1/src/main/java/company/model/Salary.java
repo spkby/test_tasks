@@ -17,7 +17,7 @@ public class Salary {
     }
 
     public Salary(int quantity) {
-        this.quantity = quantity;
+        setQuantity(quantity);
     }
 
     public int getId() {
@@ -33,6 +33,9 @@ public class Salary {
     }
 
     public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Invalid salary quantity: non-positive, quantity: " + quantity);
+        }
         this.quantity = quantity;
     }
 

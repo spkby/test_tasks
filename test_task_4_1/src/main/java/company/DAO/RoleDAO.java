@@ -3,6 +3,7 @@ package company.DAO;
 import company.Hibernate.SessionUtil;
 import company.model.Role;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -21,23 +22,11 @@ public class RoleDAO extends SessionUtil implements IDAO<Role> {
     }
 
     @Override
-    public void remove(Role role) {
-        openTransactionSession();
-
-        session = getSession();
-        session.remove(role);
-
-        closeTransactionSession();
+    public void remove(int id) {
     }
 
     @Override
     public void update(Role role) {
-        openTransactionSession();
-
-        session = getSession();
-        session.update(role);
-
-        closeTransactionSession();
     }
 
     @Override
@@ -64,5 +53,20 @@ public class RoleDAO extends SessionUtil implements IDAO<Role> {
         closeTransactionSession();
 
         return list;
+    }
+
+    public Role getByName(String name) {
+
+        openTransactionSession();
+
+        session = getSession();
+
+        Query query = session.createNativeQuery("SELECT * from role WHERE name = ?1", Role.class);
+        query.setParameter(1, name);
+        List<Role> list = query.getResultList();
+
+        closeTransactionSession();
+
+        return list.size() == 0 ? null : list.get(0);
     }
 }

@@ -17,7 +17,7 @@ public class Role {
     }
 
     public Role(String name) {
-        this.name = name;
+        setName(name);
     }
 
     public int getId() {
@@ -33,6 +33,12 @@ public class Role {
     }
 
     public void setName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Invalid role name: empty");
+        }
+        if (name.length() > 10) {
+            throw new IllegalArgumentException("Invalid role name: length more 10");
+        }
         this.name = name;
     }
 

@@ -16,9 +16,8 @@ public class Status {
     public Status() {
     }
 
-    public Status(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Status(String name) {
+        setName(name);
     }
 
     public int getId() {
@@ -34,6 +33,12 @@ public class Status {
     }
 
     public void setName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Invalid status name: empty");
+        }
+        if (name.length() > 10) {
+            throw new IllegalArgumentException("Invalid status name: length more 10");
+        }
         this.name = name;
     }
 
