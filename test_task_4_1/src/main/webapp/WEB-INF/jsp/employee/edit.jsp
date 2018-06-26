@@ -2,7 +2,11 @@
 <%@ include file="../header.jsp" %>
 <div class="jumbotron">
     <div class="container">
-
+        <c:if test="${param.error!=null}">
+            <div class="alert alert-danger" role="alert">
+                Error: ${param.error}
+            </div>
+        </c:if>
         <form action="/employee/edit" method="post" class="needs-validation" novalidate>
             <input hidden value="${employee.id}" name="employeeId">
             <div class="form-group">
@@ -29,8 +33,9 @@
                         <option
                                 <c:if test="${department.name==employee.department.name}">
                                     selected
-                                </c:if>
-                        >${department.name}</option>
+                                </c:if>>
+                                ${department.name}
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -57,7 +62,8 @@
             <div class="form-group">
                 <label>Login</label>
                 <input hidden name="currLogin" value="${account.login}">
-                <input type="text" class="form-control" name="employeeLogin" value="${account.login}" placeholder="Login"
+                <input type="text" class="form-control" name="employeeLogin" value="${account.login}"
+                       placeholder="Login"
                        required>
                 <div class="invalid-feedback">
                     Please enter login.
@@ -65,7 +71,8 @@
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" name="employeePass" value="${account.pass}" placeholder="Password"
+                <input type="password" class="form-control" name="employeePass" value="${account.pass}"
+                       placeholder="Password"
                        required>
                 <div class="invalid-feedback">
                     Please enter password.

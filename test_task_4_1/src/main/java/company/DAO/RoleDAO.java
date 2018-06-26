@@ -30,6 +30,10 @@ public class RoleDAO extends SessionUtil implements IDAO<Role> {
     }
 
     @Override
+    public void remove(Role role) {
+    }
+
+    @Override
     public Role getById(int id) {
 
         openTransactionSession();

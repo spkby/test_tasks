@@ -3,67 +3,71 @@
 
 
 <div class="jumbotron">
-    <form action="/employee/add" method="post" class="needs-validation" novalidate>
-        <div class="form-group">
-            <input type="text" class="form-control" name="login" placeholder="Login" required>
-            <div class="invalid-feedback">
-                Please enter login.
+    <div class="container">
+
+        <c:if test="${param.error!=null}">
+            <div class="alert alert-danger" role="alert">
+                Error: ${param.error}
             </div>
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" name="pass" placeholder="Password" required>
-            <div class="invalid-feedback">
-                Please enter password.
+        </c:if>
+        <form action="/employee/add" method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <input type="text" class="form-control" name="employeeLogin" placeholder="Login" required>
+                <div class="invalid-feedback">
+                    Please enter login.
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="form-group">
-            <input type="text" class="form-control" name="name" placeholder="Name" required>
-            <div class="invalid-feedback">
-                Please enter name.
+            <div class="form-group">
+                <input type="password" class="form-control" name="employeePass" placeholder="Password" required>
+                <div class="invalid-feedback">
+                    Please enter password.
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="birthday" placeholder="Birthday YYYY-MM-DD" required>
-            <div class="invalid-feedback">
-                Please enter birthday.
+            <hr>
+            <div class="form-group">
+                <input type="text" class="form-control" name="employeeName" placeholder="Name" required>
+                <div class="invalid-feedback">
+                    Please enter name.
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <select class="form-control" name="department">
-                <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
-                    <option>${department.name}</option>
-                </c:forEach>
-            </select>
-            <div class="invalid-feedback">
-                Please enter department.
+            <div class="form-group">
+                <input type="text" class="form-control" name="employeeBirthday" placeholder="Birthday YYYY-MM-DD"
+                       required>
+                <div class="invalid-feedback">
+                    Please enter birthday.
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <select class="form-control" name="role">
-                <c:forEach items="${pageContext.request.getAttribute('roles')}" var="role">
-                    <option>${role.name}</option>
-                </c:forEach>
-            </select>
-            <div class="invalid-feedback">
-                Please enter role.
+            <div class="form-group">
+                <select class="form-control" name="employeeDepartment">
+                    <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
+                        <option>${department.name}</option>
+                    </c:forEach>
+                </select>
+                <div class="invalid-feedback">
+                    Please enter department.
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="form-group">
-            <input type="text" class="form-control" name="salary" placeholder="Salary" required
-                   onkeypress="return isNumber(event)">
-            <div class="invalid-feedback">
-                Please enter salary.
+            <div class="form-group">
+                <select class="form-control" name="employeeRole">
+                    <c:forEach items="${pageContext.request.getAttribute('roles')}" var="role">
+                        <option>${role.name}</option>
+                    </c:forEach>
+                </select>
+                <div class="invalid-feedback">
+                    Please enter role.
+                </div>
             </div>
-        </div>
-        <input type="submit" class="btn btn-primary" value="Add">
-    </form>
-    <c:if test="${param.error!=null}">
-        <div class="alert alert-danger" role="alert">
-            Error: ${param.error}
-        </div>
-    </c:if>
+            <hr>
+            <div class="form-group">
+                <input type="text" class="form-control" name="employeeSalary" placeholder="Salary" required
+                       onkeypress="return isNumber(event)">
+                <div class="invalid-feedback">
+                    Please enter salary.
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Add">
+        </form>
+    </div>
 </div>
 <script>
     function isNumber(evt) {

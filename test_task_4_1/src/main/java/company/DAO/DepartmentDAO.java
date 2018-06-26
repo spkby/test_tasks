@@ -1,6 +1,7 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
+import company.model.Account;
 import company.model.Department;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -24,6 +25,10 @@ public class DepartmentDAO extends SessionUtil implements IDAO<Department> {
     @Override
     public void remove(int id) {
 
+    }
+
+    @Override
+    public void remove(Department department) {
     }
 
     @Override

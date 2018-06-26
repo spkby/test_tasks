@@ -29,6 +29,10 @@ public class StatusDAO extends SessionUtil implements IDAO<Status> {
     }
 
     @Override
+    public void remove(Status status) {
+    }
+
+    @Override
     public Status getById(int id) {
 
         openTransactionSession();

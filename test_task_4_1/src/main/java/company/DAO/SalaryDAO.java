@@ -36,15 +36,27 @@ public class SalaryDAO extends SessionUtil implements IDAO<Salary> {
     }
 
     @Override
+    public void remove(Salary salary) {
+        openTransactionSession();
+
+        session = getSession();
+
+        session.remove(salary);
+
+        closeTransactionSession();
+    }
+
+    @Override
     public void update(Salary salary) {
         openTransactionSession();
 
         session = getSession();
 
-        Query query = session.createNativeQuery("UPDATE salary SET quantity = ?1 WHERE id = ?2");
+        session.update(salary);
+        /*Query query = session.createNativeQuery("UPDATE salary SET quantity = ?1 WHERE id = ?2");
         query.setParameter(1, salary.getQuantity());
         query.setParameter(2, salary.getId());
-        query.executeUpdate();
+        query.executeUpdate();*/
 
         closeTransactionSession();
     }

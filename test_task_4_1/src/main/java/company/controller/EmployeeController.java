@@ -2,21 +2,20 @@ package company.controller;
 
 import company.DAO.*;
 import company.Security;
+import company.Utils;
 import company.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-
 @Controller
 public class EmployeeController extends AbstractController {
 
-    private AccountDAO accountDAO = new AccountDAO();
-    private DepartmentDAO departmentDAO = new DepartmentDAO();
-    private EmployeeDAO employeeDAO = new EmployeeDAO();
-    private RoleDAO roleDAO = new RoleDAO();
-    private SalaryDAO salaryDAO = new SalaryDAO();
+    private static AccountDAO accountDAO = new AccountDAO();
+    private static DepartmentDAO departmentDAO = new DepartmentDAO();
+    private static EmployeeDAO employeeDAO = new EmployeeDAO();
+    private static RoleDAO roleDAO = new RoleDAO();
+    private static SalaryDAO salaryDAO = new SalaryDAO();
 
     @GetMapping("/employee/view")
     public String getEmployeeView(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
@@ -82,13 +81,7 @@ public class EmployeeController extends AbstractController {
 
     @PostMapping("/employee/add")
     public String addEmployee(@CookieValue(value = "login", defaultValue = "") String login,
-                              @RequestParam(value = "name") String employeeName,
-                              @RequestParam(value = "birthday") String employeeBirthday,
-                              @RequestParam(value = "department") String employeeDepartment,
-                              @RequestParam(value = "role") String employeeRole,
-                              @RequestParam(value = "login") String employeeLogin,
-                              @RequestParam(value = "pass") String employeePass,
-                              @RequestParam(value = "salary") String employeeSalary) {
+                              @ModelAttribute AccountEmployeeSalary employeeAdd) {
 
         if (login.isEmpty() || !(Security.getRoleId(login) == Security.RoleId.MANAGER)) {
             return "redirect:/login";
@@ -97,109 +90,29 @@ public class EmployeeController extends AbstractController {
         boolean isError = false;
         StringBuilder errorMsg = new StringBuilder();
 
-        AccountEmployeeSalary add = null;
 
         try {
-            add = new AccountEmployeeSalary();
+            employeeAdd.create();
         } catch (IllegalArgumentException e) {
             isError = true;
             errorMsg.append(e.getMessage()).append("\n");
         }
 
-        if (!isError && accountDAO.getAccountByLogin(employeeLogin) != null) {
+        if (!isError && accountDAO.loginIsExist(employeeAdd.account.getLogin())) {
             isError = true;
-            errorMsg.append("account with login '").append(add.account.getLogin()).append("' already exist.").append("\n");
+            errorMsg.append("account with login '").append(employeeAdd.account.getLogin()).append("' already exist.").append("\n");
         }
 
         if (!isError) {
-            salaryDAO.add(add.salary);
-            employeeDAO.add(add.employee);
-            accountDAO.add(add.account);
+            salaryDAO.add(employeeAdd.salary);
+            employeeDAO.add(employeeAdd.employee);
+            accountDAO.add(employeeAdd.account);
 
             return "redirect:/employee/view";
         } else {
             return "redirect:/employee/add?error=" + errorMsg.toString();
         }
     }
-
-    private class AccountEmployeeSalary {
-        private String employeeName;
-        private String employeeBirthday;
-        private String employeeDepartment;
-        private String employeeRole;
-        private String employeeLogin;
-        private String employeePass;
-        private String employeeSalary;
-
-        private Salary salary;
-        private Employee employee;
-        private Account account;
-
-        public AccountEmployeeSalary() {
-
-        }
-
-        private void set() {
-            setSalary();
-            setEmployee();
-            setAccount();
-        }
-
-        private void setSalary() {
-            try {
-                this.salary = new Salary(Integer.parseInt(employeeSalary));
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException(e);
-            }
-        }
-
-        private void setEmployee() {
-            try {
-                this.employee = new Employee(employeeName, Date.valueOf(employeeBirthday), roleDAO.getByName(employeeRole),
-                        departmentDAO.getByName(employeeDepartment), salary);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException(e);
-            }
-        }
-
-        private void setAccount() {
-            try {
-                this.account = new Account(employeeLogin, employeePass, employee);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException(e);
-            }
-        }
-
-        public void setEmployeeName(String employeeName) {
-            this.employeeName = employeeName;
-        }
-
-        public void setEmployeeBirthday(String employeeBirthday) {
-            this.employeeBirthday = employeeBirthday;
-        }
-
-        public void setEmployeeDepartmentName(String employeeDepartment) {
-            this.employeeDepartment = employeeDepartment;
-        }
-
-        public void setEmployeeRoleName(String employeeRole) {
-            this.employeeRole = employeeRole;
-        }
-
-        public void setEmployeeLogin(String employeeLogin) {
-            this.employeeLogin = employeeLogin;
-        }
-
-        public void setEmployeePass(String employeePass) {
-            this.employeePass = employeePass;
-        }
-
-        public void setEmployeeSalary(String employeeSalary) {
-            this.employeeSalary = employeeSalary;
-        }
-    }
-
-    // TODO: delete, update
 
     @GetMapping("/employee/edit/{id}")
     public String getEmployeeEdit(@CookieValue(value = "login", defaultValue = "") String login,
@@ -224,16 +137,8 @@ public class EmployeeController extends AbstractController {
 
     @PostMapping("/employee/edit")
     public String editEmployee(@CookieValue(value = "login", defaultValue = "") String login,
-                               @RequestParam(value = "employeeId") String Id,
                                @RequestParam(value = "currLogin") String currLogin,
-                              /* @RequestParam(value = "name") String employeeName,
-                               @RequestParam(value = "birthday") String employeeBirthday,
-                               @RequestParam(value = "department") String employeeDepartmentName,
-                               @RequestParam(value = "role") String employeeRoleName,
-                               @RequestParam(value = "login") String employeeLogin,
-                               @RequestParam(value = "pass") String employeePass,
-                               @RequestParam(value = "salary") String employeeSalary*/
-                               @ModelAttribute AccountEmployeeSalary updated) {
+                               @ModelAttribute AccountEmployeeSalary employeeEdit) {
 
         if (login.isEmpty() || !(Security.getRoleId(login) == Security.RoleId.MANAGER)) {
             return "redirect:/login";
@@ -242,32 +147,29 @@ public class EmployeeController extends AbstractController {
         boolean isError = false;
         StringBuilder errorMsg = new StringBuilder();
 
-        int employeeId = Integer.parseInt(Id);
-
-        /*AccountEmployeeSalary updated = null;
-
         try {
-            updated = new AccountEmployeeSalary(employeeName, employeeBirthday, employeeDepartmentName,
-                    employeeRoleName, employeeLogin, employeePass, employeeSalary);
+            employeeEdit.get();
         } catch (IllegalArgumentException e) {
             isError = true;
             errorMsg.append(e.getMessage()).append("\n");
-        }*/
+        }
 
-        /*if (!isError && accountDAO.getAccountByLogin(employeeLogin) != null && !employeeLogin.equals(currLogin)) {
-            isError = true;
-            errorMsg.append("account with login '").append(updated.account.getLogin()).append("' already exist.").append("\n");
-        }*/
+        if (!isError && accountDAO.loginIsExist(employeeEdit.account.getLogin())) {
+            if (!employeeEdit.account.getLogin().equals(currLogin)) {
+                isError = true;
+                errorMsg.append("account with login '").append(employeeEdit.account.getLogin())
+                        .append("' already exist.").append("\n");
+            }
+        }
 
         if (!isError) {
+            accountDAO.update(employeeEdit.account);
+            employeeDAO.update(employeeEdit.employee);
+            salaryDAO.update(employeeEdit.salary);
 
-            accountDAO.update(accountDAO.getAccountByLogin(updated.account.getLogin()));
-            employeeDAO.update(updated.employee);
-            salaryDAO.update(updated.salary);
-
-            return "redirect:/employee/view/" + updated.employee.getId();
+            return "redirect:/employee/view/" + employeeEdit.employee.getId();
         } else {
-            return "redirect:/error?error=" + errorMsg.toString();
+            return "redirect:/employee/edit/" + employeeEdit.employee.getId() + "?error=" + errorMsg.toString();
         }
     }
 
@@ -293,6 +195,7 @@ public class EmployeeController extends AbstractController {
         try {
 
             Employee employee = employeeDAO.getById(Integer.parseInt(id));
+
             if (employee == null) {
                 isError = true;
                 errorMsg.append("Employee with ID ").append(id).append(" not found");
@@ -309,10 +212,16 @@ public class EmployeeController extends AbstractController {
             }
 
             if (!isError) {
+
                 accountDAO.removeByEmployeeId(employee.getId());
                 new HolidayDAO().removeByEmployeeId(employee.getId());
                 employeeDAO.remove(employee.getId());
                 salaryDAO.remove(employee.getSalary().getId());
+
+//                accountDAO.remove(accountDAO.getAccountByEmployee(employee));
+//                new HolidayDAO().removeByEmployeeId(employee.getId());
+//                employeeDAO.remove(employee);
+//                salaryDAO.remove(employee.getSalary());
             }
 
         } catch (IllegalArgumentException e) {
@@ -323,6 +232,94 @@ public class EmployeeController extends AbstractController {
             return "redirect:/employee/view";
         } else {
             return "redirect:/error?error=" + errorMsg.toString();
+        }
+    }
+
+    private class AccountEmployeeSalary {
+        private String employeeId;
+        private String employeeName;
+        private String employeeBirthday;
+        private String employeeDepartment;
+        private String employeeRole;
+        private String employeeLogin;
+        private String employeePass;
+        private String employeeSalary;
+
+        private int id;
+
+        private Salary salary;
+        private Employee employee;
+        private Account account;
+
+        public AccountEmployeeSalary() {
+        }
+
+        private void create() {
+            try {
+                salary = new Salary(Integer.parseInt(employeeSalary));
+
+                employee = new Employee(employeeName, Utils.getDate(employeeBirthday), roleDAO.getByName(employeeRole),
+                        departmentDAO.getByName(employeeDepartment), salary);
+
+                account = new Account(employeeLogin, employeePass, employee);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
+        }
+
+        private void get() {
+            try {
+                id = Integer.parseInt(employeeId);
+
+                employee = employeeDAO.getById(id);
+
+                salary = employee.getSalary();
+                salary.setQuantity(Integer.parseInt(employeeSalary));
+
+                employee.setBirthday(Utils.getDate(employeeBirthday));
+                employee.setName(employeeName);
+                employee.setDepartment(departmentDAO.getByName(employeeDepartment));
+                employee.setRole(roleDAO.getByName(employeeRole));
+
+                account = accountDAO.getAccountByEmployee(employee);
+                account.setLogin(employeeLogin);
+                account.setPass(employeePass);
+
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
+        }
+
+        public void setEmployeeId(String employeeId) {
+            this.employeeId = employeeId.trim();
+        }
+
+        public void setEmployeeName(String employeeName) {
+            this.employeeName = employeeName.trim();
+        }
+
+        public void setEmployeeBirthday(String employeeBirthday) {
+            this.employeeBirthday = employeeBirthday.trim();
+        }
+
+        public void setEmployeeDepartment(String employeeDepartment) {
+            this.employeeDepartment = employeeDepartment.trim();
+        }
+
+        public void setEmployeeRole(String employeeRole) {
+            this.employeeRole = employeeRole.trim();
+        }
+
+        public void setEmployeeLogin(String employeeLogin) {
+            this.employeeLogin = employeeLogin.trim();
+        }
+
+        public void setEmployeePass(String employeePass) {
+            this.employeePass = employeePass.trim();
+        }
+
+        public void setEmployeeSalary(String employeeSalary) {
+            this.employeeSalary = employeeSalary.trim();
         }
     }
 

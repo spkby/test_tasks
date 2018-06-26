@@ -27,15 +27,18 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         openTransactionSession();
 
         session = getSession();
-
-        /*Query query = session.createNativeQuery("UPDATE account SET login = ?1, " +
-                "pass = ?2 WHERE id = ?3");
-        query.setParameter(1, account.getLogin());
-        query.setParameter(2, account.getPass());
-        query.setParameter(3, account.getId());
-        query.executeUpdate();*/
         session.update(account);
 
+        closeTransactionSession();
+    }
+
+    @Override
+    public void remove(Account account) {
+        openTransactionSession();
+
+        session = getSession();
+//        session.remove(account);
+        session.delete(account);
         closeTransactionSession();
     }
 
@@ -121,5 +124,9 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         query.executeUpdate();
 
         closeTransactionSession();
+    }
+
+    public boolean loginIsExist(String login) {
+        return getAccountByLogin(login) != null;
     }
 }
