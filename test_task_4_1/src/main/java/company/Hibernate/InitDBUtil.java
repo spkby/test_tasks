@@ -42,47 +42,22 @@ public class InitDBUtil {
         IDAO dao;
 
         dao = new StatusDAO();
-        Status status = new Status();
-        status.setName("pending");
-        new StatusDAO().add(status);
-
-        status = new Status();
-        status.setName("accepted");
-        new StatusDAO().add(status);
-
-        status = new Status();
-        status.setName("denied");
-        new StatusDAO().add(status);
+        dao.add(new Status("pending"));
+        dao.add(new Status("accepted"));
+        dao.add(new Status("denied"));
 
         dao = new RoleDAO();
-        Role role = new Role();
-        role.setName("manager");
-        dao.add(role);
-
-        role = new Role();
-        role.setName("lead");
-        dao.add(role);
-
-        role = new Role();
-        role.setName("regular");
-        dao.add(role);
+        dao.add(new Role("manager"));
+        dao.add(new Role("lead"));
+        dao.add(new Role("regular"));
 
         dao = new DepartmentDAO();
-        Department department = new Department();
-        department.setName("Management");
-        dao.add(department);
-
-        department = new Department();
-        department.setName("Finance");
-        dao.add(department);
-
-        department = new Department();
-        department.setName("IT");
-        dao.add(department);
+        dao.add(new Department("Management"));
+        dao.add(new Department("Finance"));
+        dao.add(new Department("IT"));
 
         // 1
-        Salary salary = new Salary();
-        salary.setQuantity(1);
+        Salary salary = new Salary(1);
         new SalaryDAO().add(salary);
 
         Employee employee = new Employee();
@@ -95,8 +70,8 @@ public class InitDBUtil {
 
         Account account = new Account();
         account.setEmployee(employee);
-        account.setLogin("1");
-        account.setPass("1");
+        account.setLogin("admin");
+        account.setPass("admin");
         new AccountDAO().add(account);
     }
 

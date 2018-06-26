@@ -23,14 +23,12 @@ public class RoleDAO extends SessionUtil implements IDAO<Role> {
 
     @Override
     public void remove(int id) {
+        throw new IllegalStateException("no method");
     }
 
     @Override
     public void update(Role role) {
-    }
-
-    @Override
-    public void remove(Role role) {
+        throw new IllegalStateException("no method");
     }
 
     @Override

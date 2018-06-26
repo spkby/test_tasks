@@ -22,14 +22,12 @@ public class StatusDAO extends SessionUtil implements IDAO<Status> {
 
     @Override
     public void remove(int id) {
+        throw new IllegalStateException("no method");
     }
 
     @Override
     public void update(Status status) {
-    }
-
-    @Override
-    public void remove(Status status) {
+        throw new IllegalStateException("no method");
     }
 
     @Override

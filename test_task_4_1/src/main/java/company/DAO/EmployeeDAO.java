@@ -35,31 +35,12 @@ public class EmployeeDAO extends SessionUtil implements IDAO<Employee> {
     }
 
     @Override
-    public void remove(Employee employee) {
-        openTransactionSession();
-
-        session = getSession();
-        session.remove(employee);
-
-        closeTransactionSession();
-    }
-
-    @Override
     public void update(Employee employee) {
         openTransactionSession();
 
         session = getSession();
 
         session.update(employee);
-
-/*        Query query = session.createNativeQuery("UPDATE employee SET name = ?1, " +
-                "birthday = ?2, department_id = ?3, role_id = ?4 WHERE id = ?5");
-        query.setParameter(1, employee.getName());
-        query.setParameter(2, employee.getBirthday());
-        query.setParameter(3, employee.getDepartment().getId());
-        query.setParameter(4, employee.getRole().getId());
-        query.setParameter(5, employee.getId());
-        query.executeUpdate();*/
 
         closeTransactionSession();
     }

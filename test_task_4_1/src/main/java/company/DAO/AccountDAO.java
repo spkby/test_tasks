@@ -33,16 +33,6 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
     }
 
     @Override
-    public void remove(Account account) {
-        openTransactionSession();
-
-        session = getSession();
-//        session.remove(account);
-        session.delete(account);
-        closeTransactionSession();
-    }
-
-    @Override
     public Account getById(int id) {
 
         openTransactionSession();
@@ -81,10 +71,6 @@ public class AccountDAO extends SessionUtil implements IDAO<Account> {
         closeTransactionSession();
 
         return list.size() == 0 ? null : list.get(0);
-    }
-
-    public Employee getEmployeeByAccount(Account account) {
-        return getById(account.getId()).getEmployee();
     }
 
     public Account getAccountByLogin(String login) {

@@ -214,11 +214,6 @@ public class EmployeeController extends AbstractController {
                 new HolidayDAO().removeByEmployeeId(employee.getId());
                 employeeDAO.remove(employee.getId());
                 salaryDAO.remove(employee.getSalary().getId());
-
-//                accountDAO.remove(accountDAO.getAccountByEmployee(employee));
-//                new HolidayDAO().removeByEmployeeId(employee.getId());
-//                employeeDAO.remove(employee);
-//                salaryDAO.remove(employee.getSalary());
             }
 
         } catch (IllegalArgumentException e) {

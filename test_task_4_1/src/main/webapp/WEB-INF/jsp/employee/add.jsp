@@ -65,7 +65,7 @@
                     Please enter salary.
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary" value="Add">
+            <input type="submit" class="btn btn-primary btn-block" value="Add">
         </form>
     </div>
 </div>

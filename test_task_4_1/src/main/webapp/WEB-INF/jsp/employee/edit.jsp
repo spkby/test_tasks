@@ -11,7 +11,8 @@
             <input hidden value="${account.employee.id}" name="employeeId">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" name="employeeName" value="${account.employee.name}" placeholder="Name"
+                <input type="text" class="form-control" name="employeeName" value="${account.employee.name}"
+                       placeholder="Name"
                        required>
                 <div class="invalid-feedback">
                     Please enter name.
@@ -52,7 +53,8 @@
             </div>
             <div class="form-group">
                 <label>Salary</label>
-                <input type="text" class="form-control" name="employeeSalary" value="${account.employee.salary.quantity}"
+                <input type="text" class="form-control" name="employeeSalary"
+                       value="${account.employee.salary.quantity}"
                        placeholder="Salary" required onkeypress="return isNumber(event)">
                 <div class="invalid-feedback">
                     Please enter salary.
@@ -78,9 +80,9 @@
                     Please enter password.
                 </div>
             </div>
-            <a href="/employee/view/${account.employee.id}" class="btn btn-success btn-block" role="button"
+            <a href="/employee/view/${account.employee.id}" class="btn btn-secondary btn-block" role="button"
                aria-pressed="true">Back</a>
-            <button type="submit" class="btn btn-primary btn-block">Update</button>
+            <button type="submit" class="btn btn-dark btn-block">Update</button>
         </form>
 
     </div>

@@ -1,7 +1,6 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
-import company.model.Employee;
 import company.model.Salary;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -36,27 +35,12 @@ public class SalaryDAO extends SessionUtil implements IDAO<Salary> {
     }
 
     @Override
-    public void remove(Salary salary) {
-        openTransactionSession();
-
-        session = getSession();
-
-        session.remove(salary);
-
-        closeTransactionSession();
-    }
-
-    @Override
     public void update(Salary salary) {
         openTransactionSession();
 
         session = getSession();
 
         session.update(salary);
-        /*Query query = session.createNativeQuery("UPDATE salary SET quantity = ?1 WHERE id = ?2");
-        query.setParameter(1, salary.getQuantity());
-        query.setParameter(2, salary.getId());
-        query.executeUpdate();*/
 
         closeTransactionSession();
     }

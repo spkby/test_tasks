@@ -2,7 +2,7 @@
 <hr>
 <footer>
     <div class="container-fluid">
-        © <small>ver <c:out value="${ver}"/></small>
+        © <small>Company</small>
     </div>
 </footer>
 </body>

@@ -24,15 +24,12 @@ public class DepartmentDAO extends SessionUtil implements IDAO<Department> {
 
     @Override
     public void remove(int id) {
-
-    }
-
-    @Override
-    public void remove(Department department) {
+        throw new IllegalStateException("no method");
     }
 
     @Override
     public void update(Department department) {
+        throw new IllegalStateException("no method");
     }
 
     @Override

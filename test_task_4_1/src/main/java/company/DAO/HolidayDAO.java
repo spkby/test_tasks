@@ -47,16 +47,6 @@ public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
     }
 
     @Override
-    public void remove(Holiday holiday) {
-        openTransactionSession();
-
-        session = getSession();
-        session.remove(holiday);
-
-        closeTransactionSession();
-    }
-
-    @Override
     public Holiday getById(int id) {
 
         openTransactionSession();
@@ -97,6 +87,7 @@ public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
 
         return list;
     }
+
     public List<Holiday> getListByDepartment(Department department) {
 
         return getList().stream()

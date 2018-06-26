@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HolidayController extends AbstractController {
 
-    // TODO: add, remove, update, view, view{id}
-
     private static AccountDAO accountDAO = new AccountDAO();
     private static HolidayDAO holidayDAO = new HolidayDAO();
     private static StatusDAO statusDAO = new StatusDAO();
@@ -65,8 +63,7 @@ public class HolidayController extends AbstractController {
     }
 
     @GetMapping("/holiday/view/")
-    public String view(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
-        model = accountForJSP(login, model);
+    public String view(@CookieValue(value = "login", defaultValue = "") String login) {
 
         if (login.isEmpty()) {
             return "redirect:/login";
@@ -112,12 +109,26 @@ public class HolidayController extends AbstractController {
         boolean isError = false;
         StringBuilder errorMsg = new StringBuilder();
 
+
         Holiday holiday = new Holiday();
         try {
-            holiday.setDateFrom(Utils.getDate(dateFrom));
-            holiday.setDateTo(Utils.getDate(dateTo));
-            holiday.setStatus(statusDAO.getById(1));
-            holiday.setEmployee(accountDAO.getAccountByLogin(login).getEmployee());
+
+            if (Utils.dateIsMoreThanToday(dateFrom)) {
+                isError = true;
+                errorMsg.append("Date From before Today");
+            }
+
+            if (Utils.date2IsMoreThanDate1(dateFrom, dateTo)) {
+                isError = true;
+                errorMsg.append("Date To before From");
+            }
+
+            if (!isError) {
+                holiday.setDateFrom(Utils.getDate(dateFrom));
+                holiday.setDateTo(Utils.getDate(dateTo));
+                holiday.setStatus(statusDAO.getById(1));
+                holiday.setEmployee(accountDAO.getAccountByLogin(login).getEmployee());
+            }
 
         } catch (IllegalArgumentException e) {
             isError = true;
@@ -149,10 +160,9 @@ public class HolidayController extends AbstractController {
 
     @PostMapping("/holiday/edit")
     public String editEmployee(@CookieValue(value = "login", defaultValue = "") String login,
-                               @RequestParam(value = "currLogin") String currLogin,
                                @RequestParam(value = "dateFrom") String dateFrom,
                                @RequestParam(value = "dateTo") String dateTo,
-                               @RequestParam(value = "id") String id) {
+                               @RequestParam(value = "holiday_id") String id) {
 
         int holidayId = Integer.parseInt(id);
 
@@ -165,6 +175,16 @@ public class HolidayController extends AbstractController {
         StringBuilder errorMsg = new StringBuilder();
 
         try {
+            if (Utils.dateIsMoreThanToday(dateFrom)) {
+                isError = true;
+                errorMsg.append("Date From before Today");
+            }
+
+            if (Utils.date2IsMoreThanDate1(dateFrom, dateTo)) {
+                isError = true;
+                errorMsg.append("Date To before From");
+            }
+
             holiday = holidayDAO.getById(holidayId);
             holiday.setDateFrom(Utils.getDate(dateFrom));
             holiday.setDateTo(Utils.getDate(dateTo));
@@ -232,7 +252,6 @@ public class HolidayController extends AbstractController {
 
         boolean isError = false;
         StringBuilder errorMsg = new StringBuilder();
-        Holiday holiday = null;
 
         try {
             holidayDAO.remove(holidayDAO.getById(holidayId).getId());
@@ -242,9 +261,9 @@ public class HolidayController extends AbstractController {
         }
 
         if (!isError) {
-            return "redirect:/holiday/view/" + holiday.getId();
+            return "redirect:/holiday/view/" + holidayId;
         } else {
-            return "redirect:/holiday/edit/" + holiday.getId() + "?error=" + errorMsg.toString();
+            return "redirect:/holiday/edit/" + holidayId + "?error=" + errorMsg.toString();
         }
     }
 
