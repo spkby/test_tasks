@@ -4,8 +4,8 @@
 <div class="jumbotron">
     <div class="container">
         <c:choose>
-            <c:when test="${account!=null}">
-                <h2>Hello ${account.employee.name}</h2>
+            <c:when test="${currAccount != null}">
+                <h2>Hello ${currAccount.employee.name}</h2>
             </c:when>
             <c:otherwise>
                 <h2>Hello Guest</h2>

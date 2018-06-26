@@ -2,23 +2,31 @@
 <%@ include file="../header.jsp" %>
 <div class="jumbotron">
     <div class="container">
-        <div class="list-group">
-            <c:forEach items="${pageContext.request.getAttribute('employees')}" var="employee">
-            <a href="/employee/view/${employee.id}"
-               class="list-group-item list-group-item-action">${employee.name}
-                <!--<c:if test="${account!=null}">
-                    <c:if test="${account.employee.role.id == 1}">
-                        [ Department: ${employee.department.name},
-                        Role: ${employee.role.name} ]
-                    </c:if>
-                </c:if>--></a>
+
+        <c:if test="${employees.size() != 0}">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${pageContext.request.getAttribute('employees')}" var="employee">
+                    <tr>
+                        <td>${employee.name}</td>
+                        <td>${employee.department.name}</td>
+                        <td>${employee.role.name}</td>
+                        <td><a href="/employee/view/${employee.id}">Details</a></td>
+                    </tr>
                 </c:forEach>
-        </div>
-        <c:if test="${account!=null}">
-            <c:if test="${account.employee.role.id == 1}">
-                <a href="/employee/add" class="btn btn-primary btn-block" role="button"
-                   aria-pressed="true">Add Employee</a>
-            </c:if>
+                </tbody>
+            </table>
+        </c:if>
+        <c:if test="${currAccount != null && currAccount.employee.role.id == 1}">
+            <a href="/employee/add" class="btn btn-primary btn-block" role="button"
+               aria-pressed="true">Add Employee</a>
         </c:if>
     </div>
 </div>

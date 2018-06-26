@@ -1,12 +1,14 @@
 package company.DAO;
 
 import company.Hibernate.SessionUtil;
+import company.model.Department;
 import company.model.Employee;
 import company.model.Holiday;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
 
@@ -94,6 +96,12 @@ public class HolidayDAO extends SessionUtil implements IDAO<Holiday> {
         closeTransactionSession();
 
         return list;
+    }
+    public List<Holiday> getListByDepartment(Department department) {
+
+        return getList().stream()
+                .filter(h -> h.getEmployee().getDepartment().getId() == department.getId())
+                .collect(Collectors.toList());
     }
 
     public void removeByEmployeeId(int employeeId) {

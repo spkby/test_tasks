@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class DepartmentController extends AbstractController {
 
-    @GetMapping("/department/view")
-    public String getDepartmentView(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
+    @GetMapping("/department")
+    public String root() {
+        return "redirect:/department/list";
+    }
+
+    @GetMapping("/department/list")
+    public String list(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
 
         model = accountForJSP(login, model);
 
@@ -31,20 +36,17 @@ public class DepartmentController extends AbstractController {
     }
 
     @GetMapping("/department/view/")
-    public String getDepartmentMyView(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
-
-        model = accountForJSP(login, model);
+    public String view(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
 
         if (login.isEmpty()) {
             return "redirect:/login";
         }
-        int id = new AccountDAO().getAccountByLogin(login).getEmployee().getDepartment().getId();
 
-        return getDepartmentByIdView(login, id, model);
+        return "redirect:/department/view/" + new AccountDAO().getAccountByLogin(login).getEmployee().getDepartment().getId();
     }
 
     @GetMapping("/department/view/{id}")
-    public String getDepartmentByIdView(@CookieValue(value = "login", defaultValue = "") String login, @PathVariable(value = "id") int id, Model model) {
+    public String viewById(@CookieValue(value = "login", defaultValue = "") String login, @PathVariable(value = "id") int id, Model model) {
 
         model = accountForJSP(login, model);
 

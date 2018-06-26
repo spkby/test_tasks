@@ -5,39 +5,41 @@
         <form>
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" value="${employee.name}" disabled>
+                <input type="text" class="form-control" value="${account.employee.name}" disabled>
             </div>
             <div class="form-group">
                 <label>Birthday</label>
-                <input type="text" class="form-control" value="${employee.birthday}" disabled>
+                <input type="text" class="form-control" value="${account.employee.birthday}" disabled>
             </div>
             <div class="form-group">
                 <label>Department</label>
-                <input type="text" class="form-control" value="${employee.department.name}" disabled>
+                <input type="text" class="form-control" value="${account.employee.department.name}" disabled>
             </div>
             <div class="form-group">
                 <label>Role</label>
-                <input type="text" class="form-control" value="${employee.role.name}" disabled>
+                <input type="text" class="form-control" value="${account.employee.role.name}" disabled>
             </div>
             <div class="form-group">
                 <label>Salary</label>
-                <input type="text" class="form-control" value="${employee.salary.quantity}" disabled>
+                <input type="text" class="form-control" value="${account.employee.salary.quantity}" disabled>
             </div>
             <div class="form-group">
                 <label>Login</label>
-                <input type="text" class="form-control" value="${loginEmployee}" disabled>
+                <input type="text" class="form-control" value="${account.login}" disabled>
             </div>
         </form>
 
-        <a href="/holiday/employee/${employee.id}" class="btn btn-success btn-block" role="button"
+        <a href="/holiday/employee/${account.employee.id}" class="btn btn-success btn-block" role="button"
            aria-pressed="true">Holidays</a>
 
-        <a href="/employee/edit/${employee.id}" class="btn btn-secondary btn-block" role="button">Edit</a>
-        <c:if test="${currLogin!=loginEmployee}">
-            <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal"
-                    data-target="#exampleModal">
-                Delete
-            </button>
+        <c:if test="${currAccount.employee.role.id == 1}">
+            <a href="/employee/edit/${account.employee.id}" class="btn btn-secondary btn-block" role="button">Edit</a>
+            <c:if test="${currAccount.login != account.login}">
+                <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal"
+                        data-target="#exampleModal">
+                    Delete
+                </button>
+            </c:if>
         </c:if>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -51,15 +53,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Name ${employee.name}<br>
-                        Birthday ${employee.birthday}<br>
-                        Department ${employee.department.name}<br>
-                        Role ${employee.role.name}
+                        Name ${account.employee.name}<br>
+                        Birthday ${account.employee.birthday}<br>
+                        Department ${account.employee.department.name}<br>
+                        Role ${account.employee.role.name}
                     </div>
                     <div class="modal-footer">
                         <form action="/employee/delete" method="post">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <input hidden name="employee_id" value="${employee.id}">
+                            <input hidden name="employee_id" value="${account.employee.id}">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </div>

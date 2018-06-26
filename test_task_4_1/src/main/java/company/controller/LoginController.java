@@ -37,7 +37,7 @@ public class LoginController {
             resp.addCookie(cookie);
             return "redirect:/";
         } else {
-            return "redirect:/login?error=error";
+            return "redirect:/login?error=Invalid login or password";
         }
     }
 

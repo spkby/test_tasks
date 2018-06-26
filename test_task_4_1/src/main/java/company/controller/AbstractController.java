@@ -8,7 +8,7 @@ public abstract class AbstractController {
     protected static Model accountForJSP(String login, Model model) {
 
         if (!login.isEmpty()) {
-            model.addAttribute("account", new AccountDAO().getAccountByLogin(login));
+            model.addAttribute("currAccount", new AccountDAO().getAccountByLogin(login));
         }
 
         return model;

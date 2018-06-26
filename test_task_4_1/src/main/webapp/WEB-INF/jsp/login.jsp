@@ -2,6 +2,11 @@
 <%@ include file="header.jsp" %>
 
 <div class="jumbotron">
+    <c:if test="${param.error != null}">
+        <div class="alert alert-danger" role="alert">
+            Error: ${param.error}
+        </div>
+    </c:if>
     <form action="<c:url value='/login'/>" method="post" class="needs-validation" novalidate>
         <div class="form-group">
             <input type="text" class="form-control" name="login" placeholder="Login" required>
@@ -17,11 +22,6 @@
         </div>
         <input type="submit" class="btn btn-primary" value="Login">
     </form>
-    <c:if test="${param.error}">
-        <div class="alert alert-danger" role="alert">
-            Invalid login or password
-        </div>
-    </c:if>
 </div>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields

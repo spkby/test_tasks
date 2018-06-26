@@ -5,7 +5,7 @@
 <div class="jumbotron">
     <div class="container">
 
-        <c:if test="${param.error!=null}">
+        <c:if test="${param.error != null}">
             <div class="alert alert-danger" role="alert">
                 Error: ${param.error}
             </div>

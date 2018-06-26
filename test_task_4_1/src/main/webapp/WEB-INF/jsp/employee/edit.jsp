@@ -2,16 +2,16 @@
 <%@ include file="../header.jsp" %>
 <div class="jumbotron">
     <div class="container">
-        <c:if test="${param.error!=null}">
+        <c:if test="${param.error != null}">
             <div class="alert alert-danger" role="alert">
                 Error: ${param.error}
             </div>
         </c:if>
         <form action="/employee/edit" method="post" class="needs-validation" novalidate>
-            <input hidden value="${employee.id}" name="employeeId">
+            <input hidden value="${account.employee.id}" name="employeeId">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" name="employeeName" value="${employee.name}" placeholder="Name"
+                <input type="text" class="form-control" name="employeeName" value="${account.employee.name}" placeholder="Name"
                        required>
                 <div class="invalid-feedback">
                     Please enter name.
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label>Birthday</label>
-                <input type="text" class="form-control" name="employeeBirthday" value="${employee.birthday}"
+                <input type="text" class="form-control" name="employeeBirthday" value="${account.employee.birthday}"
                        placeholder="Birthday YYYY-MM-DD"
                        required>
                 <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <select class="form-control" name="employeeDepartment">
                     <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
                         <option
-                                <c:if test="${department.name==employee.department.name}">
+                                <c:if test="${department.name == account.employee.department.name}">
                                     selected
                                 </c:if>>
                                 ${department.name}
@@ -44,7 +44,7 @@
                 <select class="form-control" name="employeeRole">
                     <c:forEach items="${pageContext.request.getAttribute('roles')}" var="role">
                         <option
-                                <c:if test="${role.name==employee.role.name}">
+                                <c:if test="${role.name == account.employee.role.name}">
                                     selected
                                 </c:if>>${role.name}</option>
                     </c:forEach>
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label>Salary</label>
-                <input type="text" class="form-control" name="employeeSalary" value="${employee.salary.quantity}"
+                <input type="text" class="form-control" name="employeeSalary" value="${account.employee.salary.quantity}"
                        placeholder="Salary" required onkeypress="return isNumber(event)">
                 <div class="invalid-feedback">
                     Please enter salary.
@@ -78,7 +78,7 @@
                     Please enter password.
                 </div>
             </div>
-            <a href="/employee/view/${employee.id}" class="btn btn-success btn-block" role="button"
+            <a href="/employee/view/${account.employee.id}" class="btn btn-success btn-block" role="button"
                aria-pressed="true">Back</a>
             <button type="submit" class="btn btn-primary btn-block">Update</button>
         </form>

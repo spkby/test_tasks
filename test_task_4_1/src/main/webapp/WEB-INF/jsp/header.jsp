@@ -31,15 +31,16 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Home</a>
-                <c:if test="${account!=null}">
-                    <c:if test="${account.employee.role.id == 1}">
-                        <a class="navbar-brand" href="/department/view">Departments</a>
-                        <a class="navbar-brand" href="/employee/view">Employees</a>
+                <c:if test="${currAccount != null}">
+                    <c:if test="${currAccount.employee.role.id == 1}">
+                        <a class="navbar-brand" href="/department/list">Departments</a>
+                        <a class="navbar-brand" href="/employee/list">Employees</a>
                     </c:if>
-                    <c:if test="${account.employee.role.id == 2}">
+                    <c:if test="${currAccount.employee.role.id == 2}">
                         <a class="navbar-brand" href="/department/view/">Department</a>
                     </c:if>
-                    <a class="navbar-brand" href="/employee/view/">Employee</a>
+                    <a class="navbar-brand" href="/holiday">Holidays</a>
+                    <a class="navbar-brand" href="/employee/view/">Me</a>
                     <a class="navbar-brand" href="/logout">Logout</a>
                 </c:if>
             </div>

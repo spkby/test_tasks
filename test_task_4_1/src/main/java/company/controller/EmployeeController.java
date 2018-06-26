@@ -17,8 +17,13 @@ public class EmployeeController extends AbstractController {
     private static RoleDAO roleDAO = new RoleDAO();
     private static SalaryDAO salaryDAO = new SalaryDAO();
 
-    @GetMapping("/employee/view")
-    public String getEmployeeView(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
+    @GetMapping("/employee")
+    public String root() {
+        return "redirect:/employee/list";
+    }
+
+    @GetMapping("/employee/list")
+    public String list(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
 
         model = accountForJSP(login, model);
 
@@ -32,40 +37,34 @@ public class EmployeeController extends AbstractController {
         } else if (Security.getRoleId(login) == Security.RoleId.LEAD) {
             return "redirect:/department/view/";
         } else {
-            return getEmployeeMeView(login, model);
+            return "redirect:/employee/view/" + accountDAO.getAccountByLogin(login).getEmployee().getId();
         }
     }
 
     @GetMapping("/employee/view/")
-    public String getEmployeeMeView(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
-        model = accountForJSP(login, model);
+    public String view(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
 
         if (login.isEmpty()) {
             return "redirect:/login";
         }
-        int id = accountDAO.getAccountByLogin(login).getEmployee().getId();
-        return getEmployeeByIdView(login, id, model);
+        return "redirect:/employee/view/" + accountDAO.getAccountByLogin(login).getEmployee().getId();
     }
 
     @GetMapping("/employee/view/{id}")
-    public String getEmployeeByIdView(@CookieValue(value = "login", defaultValue = "") String login,
-                                      @PathVariable(value = "id") int id, Model model) {
+    public String viewById(@CookieValue(value = "login", defaultValue = "") String login,
+                           @PathVariable(value = "id") int id, Model model) {
         model = accountForJSP(login, model);
-
 
         if (login.isEmpty() || !Security.checkLoginToEmployeeId(login, id)) {
             return "redirect:/login";
         }
 
-        Employee employee = employeeDAO.getById(id);
-        model.addAttribute("employee", employee);
-        model.addAttribute("loginEmployee", accountDAO.getAccountByEmployee(employee).getLogin());
-        model.addAttribute("currLogin", login);
+        model.addAttribute("account", accountDAO.getAccountByEmployee(employeeDAO.getById(id)));
         return "employee/view";
     }
 
     @GetMapping("/employee/add")
-    public String getEmployeeAdd(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
+    public String add(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
 
         model = accountForJSP(login, model);
 
@@ -80,8 +79,8 @@ public class EmployeeController extends AbstractController {
     }
 
     @PostMapping("/employee/add")
-    public String addEmployee(@CookieValue(value = "login", defaultValue = "") String login,
-                              @ModelAttribute AccountEmployeeSalary employeeAdd) {
+    public String add(@CookieValue(value = "login", defaultValue = "") String login,
+                      @ModelAttribute AccountEmployeeSalary employeeAdd) {
 
         if (login.isEmpty() || !(Security.getRoleId(login) == Security.RoleId.MANAGER)) {
             return "redirect:/login";
@@ -108,15 +107,15 @@ public class EmployeeController extends AbstractController {
             employeeDAO.add(employeeAdd.employee);
             accountDAO.add(employeeAdd.account);
 
-            return "redirect:/employee/view";
+            return "redirect:/employee/list";
         } else {
             return "redirect:/employee/add?error=" + errorMsg.toString();
         }
     }
 
     @GetMapping("/employee/edit/{id}")
-    public String getEmployeeEdit(@CookieValue(value = "login", defaultValue = "") String login,
-                                  @PathVariable(value = "id") int id, Model model) {
+    public String edit(@CookieValue(value = "login", defaultValue = "") String login,
+                       @PathVariable(value = "id") int id, Model model) {
 
         model = accountForJSP(login, model);
 
@@ -124,21 +123,19 @@ public class EmployeeController extends AbstractController {
             return "redirect:/login";
         }
 
-        Employee employee = employeeDAO.getById(id);
-
         model.addAttribute("departments", departmentDAO.getList());
         model.addAttribute("roles", roleDAO.getList());
 
-        model.addAttribute("employee", employee);
-        model.addAttribute("account", accountDAO.getAccountByEmployee(employee));
+        //model.addAttribute("employee", employee);
+        model.addAttribute("account", accountDAO.getAccountByEmployee(employeeDAO.getById(id)));
 
         return "/employee/edit";
     }
 
     @PostMapping("/employee/edit")
-    public String editEmployee(@CookieValue(value = "login", defaultValue = "") String login,
-                               @RequestParam(value = "currLogin") String currLogin,
-                               @ModelAttribute AccountEmployeeSalary employeeEdit) {
+    public String edit(@CookieValue(value = "login", defaultValue = "") String login,
+                       @RequestParam(value = "currLogin") String currLogin,
+                       @ModelAttribute AccountEmployeeSalary employeeEdit) {
 
         if (login.isEmpty() || !(Security.getRoleId(login) == Security.RoleId.MANAGER)) {
             return "redirect:/login";
@@ -174,7 +171,7 @@ public class EmployeeController extends AbstractController {
     }
 
     @GetMapping("/employee/delete")
-    public String getEmployeeDelete(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
+    public String delete(@CookieValue(value = "login", defaultValue = "") String login, Model model) {
 
         model = accountForJSP(login, model);
 
@@ -182,8 +179,8 @@ public class EmployeeController extends AbstractController {
     }
 
     @PostMapping("/employee/delete")
-    public String addEmployee(@CookieValue(value = "login", defaultValue = "") String login,
-                              @RequestParam(value = "employee_id") String id) {
+    public String delete(@CookieValue(value = "login", defaultValue = "") String login,
+                         @RequestParam(value = "employee_id") String id) {
 
         if (login.isEmpty() || !(Security.getRoleId(login) == Security.RoleId.MANAGER)) {
             return "redirect:/login";
@@ -229,7 +226,7 @@ public class EmployeeController extends AbstractController {
             errorMsg.append(e.getMessage());
         }
         if (!isError) {
-            return "redirect:/employee/view";
+            return "redirect:/employee/list";
         } else {
             return "redirect:/error?error=" + errorMsg.toString();
         }
