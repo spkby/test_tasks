@@ -8,7 +8,7 @@
             </div>
         </c:if>
 
-        <form action="/holiday/add" method="post" class="needs-validation" novalidate>
+        <form action="<c:url value="/holiday/add"/>" method="post" class="needs-validation" novalidate>
             <div class="form-group">
                 <label>From</label>
                 <input type="text" class="form-control" name="dateFrom" placeholder="From YYYY-MM-DD" required>
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <a href="/holiday/list" class="btn btn-secondary btn-block" role="button"
+            <a href="<c:url value="/holiday/list"/>" class="btn btn-secondary btn-block" role="button"
                aria-pressed="true">Back</a>
 
             <button type="submit" class="btn btn-success btn-block">Add</button>

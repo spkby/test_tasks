@@ -4,8 +4,8 @@
     <div class="container">
 
         <div class="list-group">
-            <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
-                <a href="/department/view/${department.id}"
+            <c:forEach items="${departments}" var="department">
+                <a href="<c:url value="/department/view/${department.id}"/>"
                    class="list-group-item list-group-item-action">${department.name}</a>
             </c:forEach>
         </div>

@@ -49,7 +49,7 @@
                             To ${holiday.dateTo}
                         </div>
                         <div class="modal-footer">
-                            <form action="/holiday/denied" method="post">
+                            <form action="<c:url value="/holiday/denied"/>" method="post">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input hidden name="holiday_id" value="${holiday.id}">
                                 <button type="submit" class="btn btn-danger">Denied</button>
@@ -77,7 +77,7 @@
                             To ${holiday.dateTo}
                         </div>
                         <div class="modal-footer">
-                            <form action="/holiday/accepted" method="post">
+                            <form action="<c:url value="/holiday/accepted"/>" method="post">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input hidden name="holiday_id" value="${holiday.id}">
                                 <button type="submit" class="btn btn-danger">Accepted</button>
@@ -90,7 +90,7 @@
         </c:if>
         <br>
         <c:if test="${currAccount.employee.id == holiday.employee.id}">
-            <a href="/holiday/edit/${holiday.id}" class="btn btn-dark btn-block" role="button">Edit</a>
+            <a href="<c:url value="/holiday/edit/${holiday.id}"/>" class="btn btn-dark btn-block" role="button">Edit</a>
             <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal"
                     data-target="#deleteModal">
                 Delete
@@ -114,7 +114,7 @@
                             To ${holiday.dateTo}
                         </div>
                         <div class="modal-footer">
-                            <form action="/holiday/delete" method="post">
+                            <form action="<c:url value="/holiday/delete"/>" method="post">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input hidden name="holiday_id" value="${holiday.id}">
                                 <button type="submit" class="btn btn-danger">Delete</button>

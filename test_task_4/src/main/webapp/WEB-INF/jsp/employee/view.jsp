@@ -29,11 +29,11 @@
             </div>
         </form>
 
-        <a href="/holiday/employee/${account.employee.id}" class="btn btn-success btn-block" role="button"
-           aria-pressed="true">Holidays</a>
+        <a href="<c:url value="/holiday/employee/${account.employee.id}"/>" class="btn btn-success btn-block"
+           role="button" aria-pressed="true">Holidays</a>
 
-        <c:if test="${currAccount.employee.role.id == 1}">
-            <a href="/employee/edit/${account.employee.id}" class="btn btn-dark btn-block" role="button">Edit</a>
+        <c:if test="${currAccount.employee.role.id eq 1}">
+            <a href="<c:url value="/employee/edit/${account.employee.id}"/>" class="btn btn-dark btn-block" role="button">Edit</a>
             <c:if test="${currAccount.login != account.login}">
                 <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal"
                         data-target="#deleteModal">
@@ -58,7 +58,7 @@
                                 Role ${account.employee.role.name}
                             </div>
                             <div class="modal-footer">
-                                <form action="/employee/delete" method="post">
+                                <form action="<c:url value="/employee/delete"/>" method="post">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <input hidden name="employee_id" value="${account.employee.id}">
                                     <button type="submit" class="btn btn-danger">Delete</button>

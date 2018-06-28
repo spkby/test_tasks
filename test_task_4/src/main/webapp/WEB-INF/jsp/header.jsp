@@ -33,15 +33,15 @@
                 <a class="navbar-brand" href="/">Home</a>
                 <c:if test="${currAccount != null}">
                     <c:if test="${currAccount.employee.role.id == 1}">
-                        <a class="navbar-brand" href="/department/list">Departments</a>
-                        <a class="navbar-brand" href="/employee/list">Employees</a>
+                        <a class="navbar-brand" href="<c:url value="/department/list"/>">Departments</a>
+                        <a class="navbar-brand" href="<c:url value="/employee/list"/>">Employees</a>
                     </c:if>
                     <c:if test="${currAccount.employee.role.id == 2}">
-                        <a class="navbar-brand" href="/department/view/">Department</a>
+                        <a class="navbar-brand" href="<c:url value="/department/view/"/>">Department</a>
                     </c:if>
-                    <a class="navbar-brand" href="/holiday">Holidays</a>
-                    <a class="navbar-brand" href="/employee/view/">Me</a>
-                    <a class="navbar-brand" href="/logout">Logout</a>
+                    <a class="navbar-brand" href="<c:url value="/holiday"/>">Holidays</a>
+                    <a class="navbar-brand" href="<c:url value="/employee"/>">Me</a>
+                    <a class="navbar-brand" href="<c:url value="/logout"/>">Logout</a>
                 </c:if>
             </div>
         </div>

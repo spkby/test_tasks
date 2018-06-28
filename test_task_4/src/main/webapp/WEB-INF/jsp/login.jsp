@@ -7,7 +7,7 @@
             Error: ${param.error}
         </div>
     </c:if>
-    <form action="<c:url value='/login'/>" method="post" class="needs-validation" novalidate>
+    <form action=<c:url value='/login'/> method="post" class="needs-validation" novalidate>
         <div class="form-group">
             <input type="text" class="form-control" name="login" placeholder="Login" required>
             <div class="invalid-feedback">

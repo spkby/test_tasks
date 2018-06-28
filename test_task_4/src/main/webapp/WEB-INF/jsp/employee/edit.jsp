@@ -7,7 +7,7 @@
                 Error: ${param.error}
             </div>
         </c:if>
-        <form action="/employee/edit" method="post" class="needs-validation" novalidate>
+        <form action="<c:url value="/employee/edit"/>" method="post" class="needs-validation" novalidate>
             <input hidden value="${account.employee.id}" name="employeeId">
             <div class="form-group">
                 <label>Name</label>
@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label>Department</label>
                 <select class="form-control" name="employeeDepartment">
-                    <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
+                    <c:forEach items="${departments}" var="department">
                         <option
                                 <c:if test="${department.name == account.employee.department.name}">
                                     selected
@@ -43,11 +43,12 @@
             <div class="form-group">
                 <label>Role</label>
                 <select class="form-control" name="employeeRole">
-                    <c:forEach items="${pageContext.request.getAttribute('roles')}" var="role">
+                    <c:forEach items="${roles}" var="role">
                         <option
                                 <c:if test="${role.name == account.employee.role.name}">
                                     selected
-                                </c:if>>${role.name}</option>
+                                </c:if>
+                        >${role.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -80,7 +81,7 @@
                     Please enter password.
                 </div>
             </div>
-            <a href="/employee/view/${account.employee.id}" class="btn btn-secondary btn-block" role="button"
+            <a href="<c:url value="/employee/view/${account.employee.id}"/>" class="btn btn-secondary btn-block" role="button"
                aria-pressed="true">Back</a>
             <button type="submit" class="btn btn-dark btn-block">Update</button>
         </form>

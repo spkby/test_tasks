@@ -10,7 +10,7 @@
                 Error: ${param.error}
             </div>
         </c:if>
-        <form action="/employee/add" method="post" class="needs-validation" novalidate>
+        <form action="<c:url value="/employee/add"/>" method="post" class="needs-validation" novalidate>
             <div class="form-group">
                 <input type="text" class="form-control" name="employeeLogin" placeholder="Login" required>
                 <div class="invalid-feedback">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <select class="form-control" name="employeeDepartment">
-                    <c:forEach items="${pageContext.request.getAttribute('departments')}" var="department">
+                    <c:forEach items="${departments}" var="department">
                         <option>${department.name}</option>
                     </c:forEach>
                 </select>
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <select class="form-control" name="employeeRole">
-                    <c:forEach items="${pageContext.request.getAttribute('roles')}" var="role">
+                    <c:forEach items="${roles}" var="role">
                         <option>${role.name}</option>
                     </c:forEach>
                 </select>

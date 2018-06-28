@@ -13,7 +13,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${pageContext.request.getAttribute('employees')}" var="employee">
+                <c:forEach items="${employees}" var="employee">
                     <tr>
                         <td>${employee.name}</td>
                         <td>${employee.department.name}</td>
@@ -24,8 +24,8 @@
                 </tbody>
             </table>
         </c:if>
-        <c:if test="${currAccount != null && currAccount.employee.role.id == 1}">
-            <a href="/employee/add" class="btn btn-primary btn-block" role="button"
+        <c:if test="${currAccount != null && currAccount.employee.role.id eq 1}">
+            <a href="<c:url value="/employee/add"/>" class="btn btn-primary btn-block" role="button"
                aria-pressed="true">Add Employee</a>
         </c:if>
     </div>

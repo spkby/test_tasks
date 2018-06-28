@@ -20,13 +20,13 @@
                         <td>${holiday.dateFrom}</td>
                         <td>${holiday.dateTo}</td>
                         <td>${holiday.status.name}</td>
-                        <td><a href="/holiday/view/${holiday.id}">Details</a></td>
+                        <td><a href="<c:url value="/holiday/view/${holiday.id}"/>">Details</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </c:if>
-        <a href="/holiday/add" class="btn btn-success btn-block" role="button"
+        <a href="<c:url value="/holiday/add"/>" class="btn btn-success btn-block" role="button"
            aria-pressed="true">Add Holiday</a>
 
     </div>
